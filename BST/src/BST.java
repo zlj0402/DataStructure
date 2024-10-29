@@ -26,37 +26,67 @@ public class BST<E extends Comparable<E>> {
         return size == 0;
     }
 
+    /**
+     * version 1
+     */
+//    // 向二分搜索树中添加新的元素
+//    public void add(E e) {
+//        if (root == null) {
+//            root = new Node(e);
+//            size++;
+//        }
+//        else {
+//            add(root, e);
+//        }
+//    }
+//
+//    // 向以node为根的二分搜索树中插入元素e，递归算法
+//    private void add(Node node, E e) {
+//        if (e.equals(node.e)) {
+//            return;
+//        }
+//        else if (e.compareTo(node.e) < 0 && node.left == null) {
+//            node.left = new Node(e);
+//            size++;
+//            return;
+//        }
+//        else if(e.compareTo(node.e) > 0 && node.right == null) {
+//            node.right = new Node(e);
+//            size++;
+//            return;
+//        }
+//
+//        if (e.compareTo(node.e) < 0) {
+//            add(node.left, e);
+//        }
+//        else{
+//            add(node.right, e);
+//        }
+//    }
+
+    /**
+     * version 2
+     */
+    // 向二分搜索树中添加新的元素
     public void add(E e) {
-        if (root == null) {
-            root = new Node(e);
-            size++;
-        }
-        else {
-            add(root, e);
-        }
+        root = add(root, e);
     }
 
-    private void add(Node node, E e) {
-        if (e.equals(node.e)) {
-            return;
-        }
-        else if (e.compareTo(node.e) < 0 && node.left == null) {
-            node.left = new Node(e);
+    // 向以node为根的二分搜索树中插入元素e，递归算法
+    // 返回插入新节点后二分搜索树的根
+    private Node add(Node node, E e) {
+        if (node == null) {
             size++;
-            return;
-        }
-        else if(e.compareTo(node.e) > 0 && node.right == null) {
-            node.right = new Node(e);
-            size++;
-            return;
+            return new Node(e);
         }
 
         if (e.compareTo(node.e) < 0) {
-            add(node.left, e);
+            node.left = add(node.left, e);
         }
-        else{
-            add(node.right, e);
+        else if (e.compareTo(node.e) > 0) {
+            node.right = add(node.right, e);
         }
 
+        return node;
     }
 }
